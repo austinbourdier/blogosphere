@@ -1,45 +1,39 @@
+require_relative '../models/post'
+require_relative '../models/user'
+require_relative '../models/tag'
+require_relative '../view/view'
+
+
+
 class Controller
-  def run
-    input = ARGV
-    command = input.shift
-    argument = input.join(" ")
-    case command
-    when "add"
-      Task.add(argument)
-    when "delete"
-      Task.delete(argument)
-    when "complete"
-      Task.complete(argument)
-    when "list"
-      Task.list
+  def self.run
+    if self.logged_in
+      response = View.logged_in_menu
     else
-      View.help_user
+      response = View.logged_out_menu
     end
-  end
 
-end
+    case response
+    when "Register"
+    loop do
+      username = View.get_username
+      password = View.get_password
 
-class View
-  def self.help_user
-    puts "use add, delete, complete or list"
-  end
+      User.make_new_user(username,password)
 
-  def self.show_list (tasks)
-    tasks.each do |task|
-      puts "#{task.id}. #{task.name} is #{task.finished ? 'completed' : 'not completed'}"
-    end
-  end
 
-  def self.confirm_add
-    puts "you've added #{Task.last.name} to your list."
-  end
 
-  def self.confirm_delete(task_name)
-    puts "You've deleted #{task_name}"
-  end
 
-  def self.confirm_completed(task_name)
-    puts "You've marked #{task_name} as completed"
+
+
+    when "Log-in"
+
+    when "Open the page"
+
+    when "Log-out"
+
+    when "Exit"
+
   end
 
 end
