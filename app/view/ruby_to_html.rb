@@ -9,8 +9,9 @@ class Page_creater
       post[2].each do |tag|
         file.print "#{tag}"
       end
-      file.print "</p>"
+      file.print "</p><div class = 'hide'>Hide"
       file.puts "</div>"
+
     end
     file.puts "</BODY></HTML>"
     file.close()
