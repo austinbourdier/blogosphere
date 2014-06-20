@@ -10,8 +10,8 @@ class Post < ActiveRecord::Base
   end
 
   def self.add_post(username, title, content, *tags)
-    post = Post.create(title: title, content: content)
-    user = User.
+    user_id = User.where("username = ?", username).pluck(:id)[0]
+    post = Post.create(title: title, content: content, user_id: user_id)
     tags.each do |tag|
       post.tags << Tag.new(tag: tag)
     end
