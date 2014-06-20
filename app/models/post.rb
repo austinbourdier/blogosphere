@@ -4,24 +4,14 @@ class Post < ActiveRecord::Base
   has_many :tags
 
   def self.list_posts
-    posts = []
-
-
-    Post.all.each do |post|
-      data = []
-      tags = []
-      data[0] = post.title
-      data[1] = post.content
-      tag_objects = Tag.joins(:post).where("posts.id = ?", post.id)
-      tag_objects.each{|tag| tags << tag.tag}
-      data[2] = tags
-      posts << data
+    Post.all.map do |post|
+      [post.title, post.content, post.tags.pluck(:tag)]
     end
-   posts
   end
 
-  def self.add_post(title,content,*tags)
-    post = Post.create(title: title, content: content)
+  def self.add_post(username, title, content, *tags)
+    user_id = User.where("username = ?", username).pluck(:id)[0]
+    post = Post.create(title: title, content: content, user_id: user_id)
     tags.each do |tag|
       post.tags << Tag.new(tag: tag)
     end
