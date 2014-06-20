@@ -20,5 +20,11 @@ class Post < ActiveRecord::Base
    posts
   end
 
+  def self.add_post(title,content,*tags)
+    post = Post.create(title: title, content: content)
+    tags.each do |tag|
+      post.tags << Tag.new(tag: tag)
+    end
+  end
 
 end
