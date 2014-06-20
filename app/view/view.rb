@@ -3,11 +3,11 @@ class View
   #   @logged_in = logged_in #maybe an activerecord query here?
   # end
   def self.logged_out_menu
-    p "Welcome to the Blogosphere, please select an option:"
-    p "Register"
-    p "Log-in"
-    p "Open page"
-    p "Exit"
+    p "Welcome to the Blogosphere, please select a number:"
+    p "1 Register"
+    p "2 Log-in"
+    p "3 Open page"
+    p "4 Exit"
     gets.chomp
   end
   def self.logged_in_menu
@@ -26,11 +26,17 @@ class View
     p "Please enter a Password:"
     get.chomp
   end
+  def self.get_title
+    p "Enter title for post:"
+    gets.chomp
+  end
   def self.get_post
     p "Enter text to post:"
+    gets.chomp
   end
   def self.get_tags
     p "Enter tags for post:"
+    gets.chomp
   end
   def self.filter_for_tag
     p "Enter a tag to search for:"
