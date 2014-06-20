@@ -23,6 +23,7 @@ class Controller
         end
         break if User.make_new_user(username,password)
       end
+    puts "Your are signed up! now log-in."
     logged_out_menu
 
     when "2" #log-in
@@ -35,15 +36,17 @@ class Controller
         break if User.check_password(username,password)
       end
       User.set_logged_in_true(username)
-    logged_in_menu(username)
+      puts "You are now logged in!"
+      logged_in_menu(username)
 
     when "3" #open page
       exec 'ruby ../view/ruby_to_html.rb'
-    logged_out_menu
+      logged_out_menu
     when "4" #exit
       return
     else
       puts "Please choose a number from the list."
+      logged_out_menu
     end
 
   end
@@ -58,7 +61,7 @@ class Controller
         content = View.get_post
         tag = View.get_tag
         Post.add_post(username,title,content,tag)
-        "Your post is added!"
+        puts "Your post is added!"
       logged_in_menu(username)
       when "2" #open page
         exec 'ruby ../view/ruby_to_html.rb'
@@ -71,5 +74,6 @@ class Controller
         return
       else
         puts "please choose a number from the list"
+        logged_in_menu(username)
       end
 end
