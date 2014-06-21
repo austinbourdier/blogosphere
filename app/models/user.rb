@@ -4,11 +4,7 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true
 
   def self.make_new_user(username, password)
-    if User.create(username: username).valid?
-      User.create(username: username, password: password, logged_in: false)
-    else
-      return false
-    end
+    User.create(username: username, password: password, logged_in: false).valid?
   end
 
   def self.set_logged_in_true(username)
@@ -23,8 +19,8 @@ class User < ActiveRecord::Base
     save.user
   end
 
-  def self.get_password(username, password)
-    user = User.where('username = ?', username)
+  def self.check_password(username, password)
+    user = User.find_by(username: username)
     user.password == password
   end
 end

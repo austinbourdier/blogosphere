@@ -15,10 +15,9 @@ class Page_creater
     end
     file.puts "</BODY></HTML>"
     file.close()
+    exec "open blog.html"
   end
 end
 # posts = [["Fido", "I lost my cat! But of course I found him hiding under my bed chewing on my socks again, what a silly boy!", ["funny, dog, silly"]], ["Friday night", "Wow last night was crazy, the Radmirals sure know how to have a fun time!", ["party, friends, yolo, nofilter"]], ["What are your weekend plans?", "Hey guys! We should all get together one of these weekends, I miss you all so much :(", ["sad, frown"]]]
 # posts = Post.list_posts
 # Page_creater.create_page(posts)
-
-exec "open blog.html"
