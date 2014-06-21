@@ -36,7 +36,7 @@ class View
     print "Enter text to post: "
     gets.chomp
   end
-  def self.get_tags
+  def self.get_tag
     print "Enter tags for post: "
     gets.chomp
   end

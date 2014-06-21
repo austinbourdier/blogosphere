@@ -44,7 +44,7 @@ class Controller
       logged_in_menu(username)
 
     when "3" #open page
-      exec 'ruby ../view/ruby_to_html.rb'
+      PageCreator.create_page
       logged_out_menu
     when "4" #exit
       return
@@ -66,11 +66,11 @@ class Controller
       puts "Your post is added!"
       logged_in_menu(username)
     when "2" #open page
-      exec 'ruby ../view/ruby_to_html.rb'
+      PageCreator.create_page
       logged_in_menu(username)
     when "3" #log out
       puts "You are now logged out!"
-      User.set_loggen_in_false(username)
+      User.set_logged_in_false(username)
       logged_out_menu
     when "4" #exit
       return
