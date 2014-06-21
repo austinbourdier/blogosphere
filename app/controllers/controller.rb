@@ -2,81 +2,61 @@ require_relative '../models/post'
 require_relative '../models/user'
 require_relative '../models/tag'
 require_relative '../view/view'
-
-
-
 class Controller
-  def run
+  def initialize
     logged_out_menu
   end
 
   def logged_out_menu
     response = View.logged_out_menu
-
     case response
     when "1" #register
       loop do
-        username = View.get_username
-        password = View.get_password
-        if User.make_new_user(username,password)
-          break
-        else
-        puts "The user name already exists, try again"
-        end
+        break if User.make_new_user(View.get_username, View.get_password)
+        puts "That username already exists, try again"
       end
-    puts "You are are signed up! Now log-in."
-    logged_out_menu
-
+      puts "You have signed up!"
     when "2" #log-in
-      looping = true
-      while looping do
-        username = View.get_username
-        password = View.get_password
-        if User.check_password(username, password) ==  false
-          puts "Invaid password or username, try again!"
+      loop do
+        if User.check_password(username = View.get_username, password = View.get_password)
+          User.set_logged_in_true(username)
+          puts "You are now logged in!"
+          logged_in_menu(username)
+          break
         end
-        if User.check_password(username, password)
-          looping = false
-        end
+        puts "Invalid password or username, try again!"
       end
-      User.set_logged_in_true(username)
-      puts "You are now logged in!"
-      logged_in_menu(username)
-
     when "3" #open page
-      PageCreator.create_page
-      logged_out_menu
-    when "4" #exit
-      return
+      PageCreator.new
+    when "4" #filter
+      PageCreator.new(Tag.filter_for_tag(View.get_tag))
+    when "5" #exit
+      exit!
     else
-      puts "Please choose a number from the list."
-      logged_out_menu
+      puts "Please choose a number from the list:"
     end
-
+    logged_out_menu
   end
 
   def logged_in_menu(username)
    response = View.logged_in_menu(username)
     case response
     when "1" # post
-      title = View.get_title
-      content = View.get_post
-      tag = View.get_tag
-      Post.add_post(username,title,content,tag)
-      puts "Your post is added!"
-      logged_in_menu(username)
+      Post.add_post(username,View.get_title, View.get_post, View.get_tag)
+      puts "Your post has been added!"
     when "2" #open page
-      PageCreator.create_page
-      logged_in_menu(username)
-    when "3" #log out
+      PageCreator.new
+    when "3" #filter
+      PageCreator.new(Tag.filter_for_tag(View.get_tag))
+    when "4" #log out
       puts "You are now logged out!"
       User.set_logged_in_false(username)
       logged_out_menu
-    when "4" #exit
-      return
+    when "5" #exit
+      exit!
     else
-      puts "please choose a number from the list"
-      logged_in_menu(username)
+      puts "Please choose a number from the list:"
     end
+    logged_in_menu(username)
   end
 end
