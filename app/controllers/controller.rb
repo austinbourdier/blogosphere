@@ -6,7 +6,7 @@ require_relative '../view/view'
 
 
 class Controller
-  def self.run
+  def run
     logged_out_menu
   end
 
@@ -18,29 +18,33 @@ class Controller
       loop do
         username = View.get_username
         password = View.get_password
-        if User.make_new_user(username,password) == false
-          puts "The user name already exists, try again"
+        if User.make_new_user(username,password)
+          break
+        else
+        puts "The user name already exists, try again"
         end
-        break if User.make_new_user(username,password)
       end
-    puts "Your are signed up! now log-in."
+    puts "You are are signed up! Now log-in."
     logged_out_menu
 
     when "2" #log-in
-      loop do
+      looping = true
+      while looping do
         username = View.get_username
         password = View.get_password
-        if User.check_password(username,password) ==  false
-          puts "Invaid password for username, try again!"
+        if User.check_password(username, password) ==  false
+          puts "Invaid password or username, try again!"
         end
-        break if User.check_password(username,password)
+        if User.check_password(username, password)
+          looping = false
+        end
       end
       User.set_logged_in_true(username)
       puts "You are now logged in!"
       logged_in_menu(username)
 
     when "3" #open page
-      exec 'ruby ../view/ruby_to_html.rb'
+      PageCreator.create_page
       logged_out_menu
     when "4" #exit
       return
@@ -51,29 +55,28 @@ class Controller
 
   end
 
-  def logged_in_menu (username)
-
-      response = View.logged_in_menu
-
-      case response
-      when "1" # post
-        title = View.get_title
-        content = View.get_post
-        tag = View.get_tag
-        Post.add_post(username,title,content,tag)
-        puts "Your post is added!"
+  def logged_in_menu(username)
+   response = View.logged_in_menu(username)
+    case response
+    when "1" # post
+      title = View.get_title
+      content = View.get_post
+      tag = View.get_tag
+      Post.add_post(username,title,content,tag)
+      puts "Your post is added!"
       logged_in_menu(username)
-      when "2" #open page
-        exec 'ruby ../view/ruby_to_html.rb'
+    when "2" #open page
+      PageCreator.create_page
       logged_in_menu(username)
-      when "3" #log out
-        puts "You are now logged out!"
-        User.set_loggen_in_false(username)
+    when "3" #log out
+      puts "You are now logged out!"
+      User.set_logged_in_false(username)
       logged_out_menu
-      when "4" #exit
-        return
-      else
-        puts "please choose a number from the list"
-        logged_in_menu(username)
-      end
+    when "4" #exit
+      return
+    else
+      puts "please choose a number from the list"
+      logged_in_menu(username)
+    end
+  end
 end

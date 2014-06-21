@@ -8,38 +8,40 @@ class View
     p "2 Log-in"
     p "3 Open page"
     p "4 Exit"
+    print "> "
     gets.chomp
   end
-  def self.logged_in_menu
-    p "Welcome back USER_NAME, please select an option:"
-    p "Post"
-    p "Open the page"
-    p "Log-out"
-    p "Exit"
+  def self.logged_in_menu(username)
+    p "Welcome back #{username}, please select an option:"
+    p "1 Post"
+    p "2 Open the page"
+    p "3 Log-out"
+    p "4 Exit"
+    print "> "
     gets.chomp
   end
   def self.get_username
-    p "Please enter a Username:"
-    get.chomp
+    print "Please enter a Username: "
+    gets.chomp
   end
   def self.get_password
-    p "Please enter a Password:"
-    get.chomp
+    print "Please enter a Password: "
+    gets.chomp
   end
   def self.get_title
-    p "Enter title for post:"
+    print "Enter title for post: "
     gets.chomp
   end
   def self.get_post
-    p "Enter text to post:"
+    print "Enter text to post: "
     gets.chomp
   end
-  def self.get_tags
-    p "Enter tags for post:"
+  def self.get_tag
+    print "Enter tags for post: "
     gets.chomp
   end
   def self.filter_for_tag
-    p "Enter a tag to search for:"
+    print "Enter a tag to search for: "
     gets.chomp
   end
 end
