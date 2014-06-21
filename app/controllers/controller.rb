@@ -28,13 +28,16 @@ class Controller
     logged_out_menu
 
     when "2" #log-in
-      loop do
+      looping = true
+      while looping do
         username = View.get_username
         password = View.get_password
-        if User.check_password(username,password) ==  false
-          puts "Invaid password for username, try again!"
+        if User.check_password(username, password) ==  false
+          puts "Invaid password or username, try again!"
         end
-        break if User.check_password(username,password)
+        if User.check_password(username, password)
+          looping = false
+        end
       end
       User.set_logged_in_true(username)
       puts "You are now logged in!"
@@ -53,7 +56,7 @@ class Controller
   end
 
   def logged_in_menu(username)
-   response = View.logged_in_menu
+   response = View.logged_in_menu(username)
     case response
     when "1" # post
       title = View.get_title
