@@ -1,9 +1,4 @@
-require_relative '../models/post'
-require_relative '../models/user'
-require_relative '../models/tag'
-require_relative '../view/view'
-
-
+require_relative '../../config/application'
 
 class Controller
   def run
@@ -18,7 +13,7 @@ class Controller
       loop do
         username = View.get_username
         password = View.get_password
-        if User.make_new_user(username,password)
+        if make_new_user(username,password)
           break
         else
         puts "The user name already exists, try again"
@@ -34,14 +29,14 @@ class Controller
         password = View.get_password
         if User.check_password(username, password) ==  false
           puts "Invaid password or username, try again!"
-        end
-        if User.check_password(username, password)
+        else
+          @current_user = User.check_password(username, password)
+          @current_user.set_logged_in_true
+          puts "You are now logged in!"
           looping = false
+          logged_in_menu
         end
       end
-      User.set_logged_in_true(username)
-      puts "You are now logged in!"
-      logged_in_menu(username)
 
     when "3" #open page
       PageCreator.create_page
@@ -55,28 +50,37 @@ class Controller
 
   end
 
-  def logged_in_menu(username)
-   response = View.logged_in_menu(username)
+  def logged_in_menu
+   response = View.logged_in_menu(@current_user.username)
     case response
     when "1" # post
       title = View.get_title
       content = View.get_post
       tag = View.get_tag
-      Post.add_post(username,title,content,tag)
+      Post.add_post(@current_user.id,title,content,tag)
       puts "Your post is added!"
-      logged_in_menu(username)
+      logged_in_menu
     when "2" #open page
       PageCreator.create_page
-      logged_in_menu(username)
+      logged_in_menu
     when "3" #log out
       puts "You are now logged out!"
-      User.set_logged_in_false(username)
+      @current_user.set_logged_in_false
       logged_out_menu
     when "4" #exit
       return
     else
       puts "please choose a number from the list"
-      logged_in_menu(username)
+      logged_in_menu
+    end
+  end
+
+  def make_new_user(username, password)
+    if User.new(username: username, password: password).valid?
+      @current_user = User.create(username: username, password: password, logged_in: false)
+      return true
+    else
+      return false
     end
   end
 end

@@ -8,6 +8,7 @@ require_relative '../app/models/post'
 require_relative '../app/models/tag'
 require_relative '../app/models/user'
 require_relative '../app/view/ruby_to_html'
+require_relative '../app/view/view'
 
 
 APP_ROOT = Pathname.new(File.expand_path(File.join(File.dirname(__FILE__), '..')))

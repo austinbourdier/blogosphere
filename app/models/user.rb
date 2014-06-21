@@ -2,19 +2,20 @@ class User < ActiveRecord::Base
   has_many :posts
 
   validates :username, uniqueness: true
+  validates :password, :length => { :minimum => 5 }
 
-  def self.make_new_user(username, password)
-    User.create(username: username, password: password, logged_in: false).valid?
+  
+
+  def set_logged_in_true
+    # user = User.find_by(username: username)
+    self.logged_in = true
+    self.save
   end
 
-  def self.set_logged_in_true(username)
-    user = User.find_by(username: username)
-    user.logged_in = true
-  end
-
-  def self.set_logged_in_false(username)
-    user = User.find_by(username: username)
-    user.logged_in = false
+  def set_logged_in_false
+    # user = User.find_by(username: username)
+    self.logged_in = false
+    self.save
   end
 
   def self.check_password(username, password)
@@ -22,7 +23,7 @@ class User < ActiveRecord::Base
     if user == nil
       return false
     elsif user.password == password
-      return true
+      return user
     else
       return false
     end
