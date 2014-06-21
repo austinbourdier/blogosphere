@@ -7,7 +7,8 @@ class View
     p "1 Register"
     p "2 Log-in"
     p "3 Open page"
-    p "4 Exit"
+    p "4 Filter for a specific tag"
+    p "5 Exit"
     print "> "
     gets.chomp
   end
@@ -15,8 +16,9 @@ class View
     p "Welcome back #{username}, please select an option:"
     p "1 Post"
     p "2 Open the page"
-    p "3 Log-out"
-    p "4 Exit"
+    p "3 Filter for a specific tag"
+    p "4 Log-out"
+    p "5 Exit"
     print "> "
     gets.chomp
   end

@@ -1,7 +1,4 @@
 require_relative 'config/application'
+Controller.new
 
-# puts "Put your application code in #{File.expand_path(__FILE__)}"
-
-blogger = Controller.new
-blogger.run
 
