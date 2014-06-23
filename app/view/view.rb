@@ -15,10 +15,11 @@ class View
   def self.logged_in_menu(username)
     p "Welcome back #{username}, please select an option:"
     p "1 Post"
-    p "2 Open the page"
-    p "3 Filter for a specific tag"
-    p "4 Log-out"
-    p "5 Exit"
+    p "2 Vote on post"
+    p "3 Open the page"
+    p "4 Filter for a specific tag"
+    p "5 Log-out"
+    p "6 Exit"
     print "> "
     gets.chomp
   end
@@ -33,6 +34,16 @@ class View
   def self.get_title
     print "Enter title for post: "
     gets.chomp
+  end
+  def self.voting
+    p "Please select an option below:"
+    p "1 Upvote a post"
+    p "2 Downvote a post"
+    gets.chomp
+  end  
+  def self.get_id
+    p "Please enter a post ID number to vote on:"
+    gets.chomp.to_i
   end
   def self.get_post
     print "Enter text to post: "

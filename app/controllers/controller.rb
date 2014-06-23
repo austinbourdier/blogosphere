@@ -44,15 +44,28 @@ class Controller
     when "1" # post
       Post.add_post(username,View.get_title, View.get_post, View.get_tag)
       puts "Your post has been added!"
-    when "2" #open page
+    when "2"
+      loop do
+        case View.voting
+          when "1"
+            Post.upvote_post(View.get_id)
+            break
+          when "2"
+            Post.downvote_post(View.get_id)
+            break
+          p "Please enter an available choice!"
+          end
+    
+      end
+    when "3" #open page
       PageCreator.new
-    when "3" #filter
+    when "4" #filter
       PageCreator.new(Tag.filter_for_tag(View.get_tag))
-    when "4" #log out
+    when "5" #log out
       puts "You are now logged out!"
       User.set_logged_in_false(username)
       logged_out_menu
-    when "5" #exit
+    when "6" #exit
       exit!
     else
       puts "Please choose a number from the list:"

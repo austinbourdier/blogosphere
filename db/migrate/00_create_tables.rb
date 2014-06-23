@@ -3,6 +3,7 @@ class CreateTables < ActiveRecord::Migration
     create_table :posts do |table|
       table.string :title
       table.string :content
+      table.integer :point_count
       table.integer :user_id
       table.timestamps
     end

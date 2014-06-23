@@ -9,7 +9,7 @@ require 'faker'
   end
 
   10.times do
-    Post.create({title: Faker::Company.catch_phrase, content: Faker::Lorem.paragraph(3), user_id: rand(1..5)
+    Post.create({title: Faker::Company.catch_phrase, content: Faker::Lorem.paragraph(3), point_count: 0, user_id: rand(1..5)
       })
   end
 
