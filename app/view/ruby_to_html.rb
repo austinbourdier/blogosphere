@@ -21,8 +21,8 @@ class PageCreator
     </style>
     </head><BODY><CENTER><h1>Blogosphere</h1></CENTER>"
     @posts.each do |post|
-      file.print "<div class = 'posts'><h3>#{post[0]}</h3><p>#{post[1]}</p><p>Tags: "
-      post[2].each do |tag|
+      file.print "<div class = 'posts'><h3>#{post[0]}. #{post[1]}</h3><h4>#{post[2]} points</h4><p>#{post[3]}</p><p>Tags: "
+      post[4].each do |tag|
         file.print "#{tag} "
       end
       file.puts "</div>"
